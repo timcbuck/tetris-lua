@@ -9,7 +9,7 @@ function Tetronimo:new(shape)
     self.form = nil -- overridden in subclass
     self.x_offset = 3
     self.y_offset = 0
-    self.orientation = 1 -- 1=up, 2=right, 3=down, 4=left
+    self.orientation = "up" -- 1=up, 2=right, 3=down, 4=left
     self.fall_speed = Globals.fall_speed
     self.fall_timer = Timer()
 
@@ -23,7 +23,7 @@ function Tetronimo:update(dt)
 end
 
 function Tetronimo:draw()
-    for _, block in ipairs(self.form) do
+    for _, block in ipairs(self.form[self.orientation]) do
         love.graphics.rectangle("fill",
                                 Globals.PLAY_AREA_TOP_LEFT_X + (self.block_size * block.x) + (self.block_size * self.x_offset),
                                 Globals.PLAY_AREA_TOP_LEFT_Y + (self.block_size * block.y) + (self.block_size * self.y_offset),
@@ -33,44 +33,21 @@ function Tetronimo:draw()
 end
 
 function Tetronimo:rotate()
+    local initial_orientation = self.orientation
+
     if input:pressed("rotate") then
-        if self.form then -- self.form is defined in subclass, so it will be nil briefly when object first created
-            local rotation_x, rotation_y = self:getRotationPoint()
-            local new_positions = {}
-
-            for i, block in ipairs(self.form) do
-                local new_x, new_y
-                
-                if not block.rotation_point then
-                    -- TODO: rotate by 2 places for blocks further from rotation point???
-                    local x_diff = block.x - rotation_x
-                    local y_diff = block.y - rotation_y
-
-                    if (block.x == rotation_x and block.y < rotation_y) or block.x < rotation_x then new_x = block.x + 1 end
-                    if (block.x == rotation_x and block.y > rotation_y) or block.x > rotation_x then new_x = block.x - 1 end
-                    if (block.y == rotation_y and block.x < rotation_x) or block.y > rotation_y then new_y = block.y - 1 end
-                    if (block.y == rotation_y and block.x > rotation_x) or block.y < rotation_y then new_y = block.y + 1 end
-
-                    table.insert(new_positions, {id = i, x = new_x or block.x, y = new_y or block.y})
-
-                    if not self:canRotate(new_x, new_y, self.x_offset, self.y_offset) then
-                        return -- one of the blocks cannot rotate into the new position, escape the rotate function
-                    end
-                end
-            end
-
-            -- All blocks will rotate into the new positions, so rotate them!
-            -- TODO: make this whole rotation part simpler....
-            for i, block in ipairs(self.form) do
-                for j, v in ipairs(new_positions) do
-                    if new_positions[j].id == i then
-                        block.x = new_positions[j].x
-                        block.y = new_positions[j].y
-                    end
-                end
-            end
+        if self.orientation == "up" then
+            self.orientation = "right"
+        elseif self.orientation == "right" then
+            self.orientation = "down"
+        elseif self.orientation == "down" then
+            self.orientation = "left"
+        else
+            self.orientation = "up"
         end
     end
+
+    if not self:canMove(self.x_offset, self.y_offset) then self.orientation = initial_orientation end
 end
 
 function Tetronimo:move()
@@ -90,7 +67,7 @@ end
 
 function Tetronimo:canMove(new_x_offset, new_y_offset)
     if self.form then -- self.form is defined in subclass, so it will be nil briefly when object first created
-        for _, block in ipairs(self.form) do
+        for _, block in ipairs(self.form[self.orientation]) do
             if block.x + new_x_offset > 9 or block.x + new_x_offset < 0 then return false end
             if block.y + new_y_offset > 19 then return false end
             -- TODO: Block is going to overlap another block in the matrix
@@ -99,19 +76,8 @@ function Tetronimo:canMove(new_x_offset, new_y_offset)
     return true
 end
 
-function Tetronimo:canRotate(new_x, new_y, x_off, y_off)
-    if new_x + x_off < 0 or new_x + x_off > 9 then return false end
-    if new_y + y_off > 19 then return false end
-    return true
-end
-
-function Tetronimo:getRotationPoint()
-    if self.form then
-        for _, block in ipairs(self.form) do
-            if block.rotation_point then return block.x, block.y end
-        end
-    end
-end
-
 function Tetronimo:hardDrop()
+end
+
+function Tetronimo:isPlaced()
 end

@@ -1,5 +1,6 @@
 require("objects.Matrix")
 require("objects.TetronimoT")
+require("objects.TetronimoZ")
 
 local game = {}
 

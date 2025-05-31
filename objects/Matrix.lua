@@ -15,3 +15,6 @@ function Matrix:draw()
                             self.columns * self.block_size,
                             self.rows * self.block_size)
 end
+
+function Matrix:addTetronimo()
+end

@@ -1,35 +1,35 @@
 require("objects.Tetronimo")
 
-TetronimoT = Tetronimo:extend()
+TetronimoZ = Tetronimo:extend()
 
-function TetronimoT:new()
-    TetronimoT.super.new(self, "T")
-    self.form = { up =     {{x = 0, y = 1},
+function TetronimoZ:new()
+    TetronimoZ.super.new(self, "T")
+    self.form = { up =     {{x = 0, y = 0},
                             {x = 1, y = 0},
                             {x = 1, y = 1},
                             {x = 2, y = 1}},
                   right =  {{x = 1, y = 0},
                             {x = 1, y = 1},
-                            {x = 2, y = 1},
-                            {x = 1, y = 2}},
-                  down =   {{x = 1, y = 2},
                             {x = 0, y = 1},
+                            {x = 0, y = 2}},
+                  down =   {{x = 0, y = 0},
+                            {x = 1, y = 0},
                             {x = 1, y = 1},
                             {x = 2, y = 1}},
                   left =   {{x = 1, y = 0},
                             {x = 1, y = 1},
-                            {x = 1, y = 2},
-                            {x = 0, y = 1}}
+                            {x = 0, y = 1},
+                            {x = 0, y = 2}}
                 }
-    self.colour = {160, 0, 240} --purple
+    self.colour = {240, 0, 0} --red
 end
 
-function TetronimoT:update(dt)
-    TetronimoT.super.update(self, dt)
+function TetronimoZ:update(dt)
+    TetronimoZ.super.update(self, dt)
 end
 
-function TetronimoT:draw()
+function TetronimoZ:draw()
     love.graphics.setColor(self.colour)
-    TetronimoT.super.draw(self)
+    TetronimoZ.super.draw(self)
     love.graphics.setColor(1, 1, 1)
 end
