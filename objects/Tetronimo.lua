@@ -36,7 +36,9 @@ function Tetronimo:rotate()
     if input:pressed("rotate") then
         if self.form then -- self.form is defined in subclass, so it will be nil briefly when object first created
             local rotation_x, rotation_y = self:getRotationPoint()
-            for _, block in ipairs(self.form) do
+            local new_positions = {}
+
+            for i, block in ipairs(self.form) do
                 local new_x, new_y
                 
                 if not block.rotation_point then
@@ -49,10 +51,21 @@ function Tetronimo:rotate()
                     if (block.y == rotation_y and block.x < rotation_x) or block.y > rotation_y then new_y = block.y - 1 end
                     if (block.y == rotation_y and block.x > rotation_x) or block.y < rotation_y then new_y = block.y + 1 end
 
-                    
-                    if self:canRotate(new_x, new_y, self.x_offset, self.y_offset) then
-                        block.x = new_x or block.x
-                        block.y = new_y or block.y
+                    table.insert(new_positions, {id = i, x = new_x or block.x, y = new_y or block.y})
+
+                    if not self:canRotate(new_x, new_y, self.x_offset, self.y_offset) then
+                        return -- one of the blocks cannot rotate into the new position, escape the rotate function
+                    end
+                end
+            end
+
+            -- All blocks will rotate into the new positions, so rotate them!
+            -- TODO: make this whole rotation part simpler....
+            for i, block in ipairs(self.form) do
+                for j, v in ipairs(new_positions) do
+                    if new_positions[j].id == i then
+                        block.x = new_positions[j].x
+                        block.y = new_positions[j].y
                     end
                 end
             end
@@ -98,4 +111,7 @@ function Tetronimo:getRotationPoint()
             if block.rotation_point then return block.x, block.y end
         end
     end
+end
+
+function Tetronimo:hardDrop()
 end
