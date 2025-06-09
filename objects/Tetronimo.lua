@@ -51,18 +51,23 @@ function Tetronimo:rotate()
 end
 
 function Tetronimo:move()
-    if input:down("right", Globals.move_speed) then
+    if input:down("right", Globals.MOVE_SPEED) then
         if self:canMove(self.x_offset + 1, self.y_offset) then self.x_offset = self.x_offset + 1 end
     end
-    if input:down("left", Globals.move_speed) then
+    if input:down("left", Globals.MOVE_SPEED) then
         if self:canMove(self.x_offset - 1, self.y_offset) then self.x_offset = self.x_offset - 1 end
+    end
+    if input:down("down", Globals.MOVE_SPEED) then
+        if self:canMove(self.x_offset, self.y_offset + 1) then self.y_offset = self.y_offset + 1 end
     end
 end
 
 function Tetronimo:fall()
     local new_y_offset = self.y_offset + 1
     -- TODO: check if it can move down
-    if self:canMove(self.x_offset, self.y_offset + 1) then self.y_offset = self.y_offset + 1 end
+    if not input:down("down") then -- don't fall automatically if already moving down
+        if self:canMove(self.x_offset, self.y_offset + 1) then self.y_offset = self.y_offset + 1 end
+    end
 end
 
 function Tetronimo:canMove(new_x_offset, new_y_offset)

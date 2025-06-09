@@ -11,8 +11,8 @@ function love.load()
     input = Input()
     input:bind("a", "left")
     input:bind("d", "right")
-    input:bind("s", "rotate")
-    input:bind("space", "drop")
+    input:bind("s", "down")
+    input:bind("space", "rotate")
 
     timer = Timer()
 
