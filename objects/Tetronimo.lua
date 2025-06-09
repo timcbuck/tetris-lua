@@ -81,8 +81,5 @@ function Tetronimo:canMove(new_x_offset, new_y_offset)
     return true
 end
 
-function Tetronimo:hardDrop()
-end
-
 function Tetronimo:isPlaced()
 end

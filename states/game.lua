@@ -6,6 +6,8 @@ local game = {}
 
 function game.load()
     matrix = Matrix()
+    matrix:createGrid()
+    matrix:printGrid()
     current_tetronimo = TetronimoT()
 end
 
