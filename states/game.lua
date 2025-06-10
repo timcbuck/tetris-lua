@@ -3,6 +3,7 @@ require("objects.TetronimoT")
 require("objects.TetronimoZ")
 
 local game = {}
+local matrix = nil
 local tetronimos = {TetronimoT, TetronimoZ}
 local current_tetronimo = nil
 
@@ -35,7 +36,7 @@ end
 
 function game.spawnTetronimo()
     local index = love.math.random(1, #tetronimos)
-    current_tetronimo = tetronimos[index]() -- Instantiate tetronimo
+    current_tetronimo = tetronimos[index](matrix) -- Instantiate tetronimo
 end
 
 return game

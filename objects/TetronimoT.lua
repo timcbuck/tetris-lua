@@ -2,8 +2,8 @@ require("objects.Tetronimo")
 
 TetronimoT = Tetronimo:extend()
 
-function TetronimoT:new()
-    TetronimoT.super.new(self, "T")
+function TetronimoT:new(matrix)
+    TetronimoT.super.new(self, matrix, "T")
     self.form = { up =     {{x = 0, y = 1},
                             {x = 1, y = 0},
                             {x = 1, y = 1},

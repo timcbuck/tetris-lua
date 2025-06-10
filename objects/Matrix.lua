@@ -20,13 +20,14 @@ function Matrix:update(dt)
 end
 
 function Matrix:draw()
+    -- Draw grid outline
     love.graphics.rectangle("line",
                             Globals.PLAY_AREA_TOP_LEFT_X,
                             Globals.PLAY_AREA_TOP_LEFT_Y,
                             self.columns * self.block_size,
                             self.rows * self.block_size)
 
-    -- TODO: draw the grid and color in the squares that contain blocks (based on self.grid)!
+    -- Draw grid (colour the squares based on what tetronimos have been placed)
     local x_offset, y_offset = 0, 0
     for y = 0, self.rows-1 do
         x_offset = 0
@@ -72,4 +73,8 @@ function Matrix:printGrid()
         end
         print(rowStr)
     end
+end
+
+function Matrix:isEmptyCell(x, y)
+    if self.grid[y][x] then return false else return true end
 end

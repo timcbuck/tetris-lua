@@ -1,9 +1,10 @@
 Tetronimo = Object:extend()
 
-function Tetronimo:new(shape)
+function Tetronimo:new(matrix, shape)
     if self.__index == Tetronimo then
         error("Tetronimo is an abstract base class and should not be instantiated directly")
     end
+    self.matrix = matrix -- needs to query the matrix instance when moving to a new position
     self.shape = shape
     self.block_size = Globals.BLOCK_SIZE
     self.form = nil -- overridden in subclass
@@ -15,6 +16,8 @@ function Tetronimo:new(shape)
     self.is_placed = false
 
     self.fall_timer:every(self.fall_speed, function() self:fall() end)
+
+    print(self.matrix)
 end
 
 function Tetronimo:update(dt)
@@ -80,6 +83,7 @@ function Tetronimo:canMove(new_x_offset, new_y_offset)
             if block.x + new_x_offset > 9 or block.x + new_x_offset < 0 then return false end
             if block.y + new_y_offset > 19 then return false end
             -- TODO: Check if new x/y are occupied by another block (by querying the Matrix object?)
+            if not self.matrix:isEmptyCell(block.x + new_x_offset, block.y + new_y_offset) then return false end
         end
     end
     return true
