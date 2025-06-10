@@ -11,13 +11,17 @@ function game.load()
     matrix:createGrid()
     matrix:printGrid()
 
-    local index = love.math.random(1, #tetronimos)
-    current_tetronimo = tetronimos[index]() -- Instantiate tetronimo
+    game.spawnTetronimo()
 end
 
 function game.update(dt)
     matrix:update(dt)
     current_tetronimo:update(dt)
+
+    if current_tetronimo.is_placed then
+        matrix:placeTetronimo(current_tetronimo)
+        game.spawnTetronimo()
+    end
 end
 
 function game.draw()
@@ -27,6 +31,11 @@ end
 
 function game.keypressed(key)
     -- Handle game keys
+end
+
+function game.spawnTetronimo()
+    local index = love.math.random(1, #tetronimos)
+    current_tetronimo = tetronimos[index]() -- Instantiate tetronimo
 end
 
 return game
