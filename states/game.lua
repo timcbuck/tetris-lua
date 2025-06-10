@@ -1,10 +1,11 @@
 require("objects.Matrix")
 require("objects.TetronimoT")
 require("objects.TetronimoZ")
+require("objects.TetronimoL")
 
 local game = {}
 local matrix = nil
-local tetronimos = {TetronimoT, TetronimoZ}
+local tetronimos = {TetronimoT, TetronimoZ, TetronimoL}
 local current_tetronimo = nil
 
 function game.load()

@@ -21,7 +21,7 @@ function TetronimoZ:new(matrix)
                             {x = 0, y = 1},
                             {x = 0, y = 2}}
                 }
-    self.colour = {240, 0, 0} --red
+    self.colour = {240/255, 0, 0} --red
 end
 
 function TetronimoZ:update(dt)

@@ -21,7 +21,7 @@ function TetronimoT:new(matrix)
                             {x = 1, y = 2},
                             {x = 0, y = 1}}
                 }
-    self.colour = {160, 0, 240} --purple
+    self.colour = {160/255, 0, 240/255} --purple
 end
 
 function TetronimoT:update(dt)
