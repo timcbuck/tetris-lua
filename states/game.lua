@@ -2,10 +2,15 @@ require("objects.Matrix")
 require("objects.TetronimoT")
 require("objects.TetronimoZ")
 require("objects.TetronimoL")
+require("objects.TetronimoJ")
+require("objects.TetronimoO")
+require("objects.TetronimoS")
+require("objects.TetronimoI")
+
 
 local game = {}
 local matrix = nil
-local tetronimos = {TetronimoT, TetronimoZ, TetronimoL}
+local tetronimos = {TetronimoT, TetronimoZ, TetronimoL, TetronimoJ, TetronimoO, TetronimoS, TetronimoI}
 local current_tetronimo = nil
 
 function game.load()
@@ -13,7 +18,8 @@ function game.load()
     matrix:createGrid()
     matrix:printGrid()
 
-    game.spawnTetronimo()
+    --game.spawnTetronimo()
+    current_tetronimo = TetronimoI(matrix)
 end
 
 function game.update(dt)

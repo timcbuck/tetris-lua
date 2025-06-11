@@ -78,3 +78,4 @@ end
 function Matrix:isEmptyCell(x, y)
     if self.grid[y][x] then return false else return true end
 end
+
