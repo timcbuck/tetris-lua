@@ -30,7 +30,8 @@ function game.update(dt)
         matrix:placeTetronimo(current_tetronimo)
         local placed_start_row = current_tetronimo:getStartRow()
         local placed_end_row = current_tetronimo:getEndRow()
-        Matrix:getClearedRows(placed_start_row, placed_end_row)
+        local cleared_rows = matrix:getClearedRows(placed_start_row, placed_end_row)
+        if #cleared_rows > 0 then matrix:clearRows(cleared_rows) end
         game.spawnTetronimo()
     end
 end

@@ -8,10 +8,10 @@ end
 
 function Matrix:createGrid()
     -- Grid will be filled with tetronimo colours when they are placed
-    for y = 0, self.rows-1 do
-        self.grid[y] = {}
-        for x = 0, self.columns-1 do
-            self.grid[y][x] = nil
+    for row = 0, self.rows-1 do
+        self.grid[row] = {}
+        for col = 0, self.columns-1 do
+            self.grid[row][col] = nil
         end
     end
 end
@@ -96,9 +96,43 @@ function Matrix:isEmptyCell(x, y)
 end
 
 function Matrix:getClearedRows(start_row, end_row)
-    local rows_cleared = {}
-    for r = start_row, end_row do
-        table.insert(rows_cleared, r)
+    -- Check rows to see if any have a nil column
+    -- If none are nil, add row number to cleared_rows
+    local cleared_rows = {}
+    for row = start_row, end_row do
+        local cleared = true
+        for col = 0, self.columns-1 do
+            if not self.grid[row][col] then
+                cleared = false
+                break
+            end
+        end
+        if cleared then
+            print("row " .. row ..  " is cleared!")
+            table.insert(cleared_rows, row)
+        end
     end
-    -- TODO: still working on this....
+
+    return cleared_rows
+end
+
+function Matrix:clearRows(rows)
+    -- Clear the rows
+    for _, row in ipairs(rows) do
+        for col = 0, self.columns-1 do
+            self.grid[row][col] = nil
+        end
+    end
+    -- Move blocks above down by the number of rows cleared
+    local first_row_cleared = rows[1]
+    local num_of_rows_cleared = #rows
+    for row = first_row_cleared, 0, -1 do
+        for col = 0, self.columns-1 do
+            if self.grid[row][col] then
+                local this_cell = self.grid[row][col]
+                self.grid[row + num_of_rows_cleared][col] = this_cell -- Move down by number of rows cleared
+                self.grid[row][col] = nil -- Change current cell to nil
+            end
+        end
+    end
 end
