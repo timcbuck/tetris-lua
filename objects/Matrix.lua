@@ -116,23 +116,44 @@ function Matrix:getClearedRows(start_row, end_row)
     return cleared_rows
 end
 
-function Matrix:clearRows(rows)
-    -- Clear the rows
-    for _, row in ipairs(rows) do
-        for col = 0, self.columns-1 do
+function Matrix:clearRows(cleared_rows)
+   -- Sort cleared rows in ascending order
+    table.sort(cleared_rows)
+
+    -- Remove blocks in the cleared rows
+    for _, row in ipairs(cleared_rows) do
+        for col = 0, self.columns - 1 do
             self.grid[row][col] = nil
         end
     end
-    -- Move blocks above down by the number of rows cleared
-    local first_row_cleared = rows[1]
-    local num_of_rows_cleared = #rows
-    for row = first_row_cleared, 0, -1 do
-        for col = 0, self.columns-1 do
-            if self.grid[row][col] then
-                local this_cell = self.grid[row][col]
-                self.grid[row + num_of_rows_cleared][col] = this_cell -- Move down by number of rows cleared
-                self.grid[row][col] = nil -- Change current cell to nil
+
+    -- Move rows down by the number of cleared rows below them
+    for row = self.rows - 1, 0, -1 do
+        -- Skip if this row was cleared
+        local is_cleared = false
+        for _, cleared in ipairs(cleared_rows) do
+            if row == cleared then
+                is_cleared = true
+                break
             end
         end
+        if is_cleared then goto continue end
+
+        -- Count how many cleared rows are below this row
+        local shift = 0
+        for _, cleared in ipairs(cleared_rows) do
+            if cleared > row then
+                shift = shift + 1
+            end
+        end
+
+        if shift > 0 then
+            for col = 0, self.columns - 1 do
+                self.grid[row + shift][col] = self.grid[row][col]
+                self.grid[row][col] = nil
+            end
+        end
+
+        ::continue::
     end
 end
