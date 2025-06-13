@@ -69,10 +69,8 @@ function Tetronimo:move()
 end
 
 function Tetronimo:fall()
-    local new_y_offset = self.y_offset + 1
-    -- TODO: check if it can move down
     if not input:down("down") then -- don't fall automatically if user is already moving down
-        if self:canMove(self.x_offset, new_y_offset) then self.y_offset = self.y_offset + 1 else self.is_placed = true end
+        if self:canMove(self.x_offset, self.y_offset + 1) then self.y_offset = self.y_offset + 1 else self.is_placed = true end
     end
 end
 
