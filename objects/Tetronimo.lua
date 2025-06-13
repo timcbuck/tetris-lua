@@ -88,3 +88,21 @@ function Tetronimo:canMove(new_x_offset, new_y_offset)
     end
     return true
 end
+
+function Tetronimo:getStartRow()
+    -- Return the first row that this tetronimo is placed on
+    local min_y = self.form[self.orientation][1].y
+    for _, block in ipairs(self.form[self.orientation]) do
+        min_y = (block.y < min_y) and block.y or min_y
+    end
+    return min_y + self.y_offset
+end
+
+function Tetronimo:getEndRow()
+    -- Get the last row that this tetronimo is placed on
+    local max_y = self.form[self.orientation][1].y
+    for _, block in ipairs(self.form[self.orientation]) do
+        max_y = (block.y > max_y) and block.y or max_y
+    end
+    return max_y + self.y_offset
+end

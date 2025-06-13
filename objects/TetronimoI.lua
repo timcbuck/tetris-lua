@@ -12,14 +12,14 @@ function TetronimoI:new(matrix)
                             {x = 1, y = 2},
                             {x = 2, y = 2},
                             {x = 3, y = 2}},
-                  down =   {{x = 2, y = 0},
-                            {x = 2, y = 1},
-                            {x = 2, y = 2},
-                            {x = 2, y = 3}},
-                  left =   {{x = 0, y = 2},
+                  down =   {{x = 1, y = 0},
+                            {x = 1, y = 1},
                             {x = 1, y = 2},
-                            {x = 2, y = 2},
-                            {x = 3, y = 2}}
+                            {x = 1, y = 3}},
+                  left =   {{x = 0, y = 1},
+                            {x = 1, y = 1},
+                            {x = 2, y = 1},
+                            {x = 3, y = 1}}
                 }
     self.colour = {110/255, 236/255, 238/255} --light blue
 end
