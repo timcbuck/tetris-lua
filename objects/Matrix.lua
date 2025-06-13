@@ -28,19 +28,33 @@ function Matrix:draw()
                             self.rows * self.block_size)
 
     -- Draw grid outline
+    local horizontal_line_y = Globals.PLAY_AREA_TOP_LEFT_Y + self.block_size
+    local vertical_line_x = Globals.PLAY_AREA_TOP_LEFT_X + self.block_size
+    -- Draw horizontal line
+    for y = 0, self.rows-1 do
+        love.graphics.line(Globals.PLAY_AREA_TOP_LEFT_X, horizontal_line_y, Globals.PLAY_AREA_TOP_LEFT_X + self.columns * self.block_size, horizontal_line_y)
+        horizontal_line_y = horizontal_line_y + self.block_size
+    end
+    -- Draw vertical line
+    for x = 0, self.columns-1 do
+        love.graphics.line(vertical_line_x, Globals.PLAY_AREA_TOP_LEFT_Y, vertical_line_x, Globals.PLAY_AREA_TOP_LEFT_Y + self.rows * self.block_size)
+        vertical_line_x = vertical_line_x + self.block_size
+    end
 
-    -- Draw grid (colour the squares based on what tetronimos have been placed)
+    -- Draw placed tetronimos
     local x_offset, y_offset = 0, 0
     for y = 0, self.rows-1 do
         x_offset = 0
         for x = 0, self.columns-1 do
-            if self.grid[y][x] then love.graphics.setColor(self.grid[y][x]) else love.graphics.setColor(0, 0, 0) end
-            love.graphics.rectangle("fill",
-                                    Globals.PLAY_AREA_TOP_LEFT_X + x_offset,
-                                    Globals.PLAY_AREA_TOP_LEFT_Y + y_offset,
-                                    self.block_size,
-                                    self.block_size)
-            love.graphics.setColor(1, 1, 1)
+            if self.grid[y][x] then
+                love.graphics.setColor(self.grid[y][x])
+                love.graphics.rectangle("fill",
+                                        Globals.PLAY_AREA_TOP_LEFT_X + x_offset,
+                                        Globals.PLAY_AREA_TOP_LEFT_Y + y_offset,
+                                        self.block_size,
+                                        self.block_size)
+                love.graphics.setColor(1, 1, 1)
+            end
             x_offset = x_offset + self.block_size
         end
         y_offset = y_offset + self.block_size
