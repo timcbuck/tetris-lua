@@ -16,8 +16,6 @@ function Tetronimo:new(matrix, shape)
     self.is_placed = false
 
     self.fall_timer:every(self.fall_speed, function() self:fall() end)
-
-    print(self.matrix)
 end
 
 function Tetronimo:update(dt)

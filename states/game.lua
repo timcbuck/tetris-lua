@@ -18,7 +18,6 @@ local next_tetronimo = nil
 function game.load()
     matrix = Matrix()
     matrix:createGrid()
-    matrix:printGrid()
 
     -- Start game with random piece
     current_tetronimo = tetronimos[love.math.random(1, #tetronimos)](matrix)
@@ -84,7 +83,7 @@ function game.spawnTetronimo()
 
     -- Choose next tetronimo from the bag
     if #tetronimo_bag == 1 then -- If only 1 tetronimo left in the bag, reset the bag
-        next_tetronimo = tetronimos[1](matrix)
+        next_tetronimo = tetronimos[tetronimo_bag[1]](matrix)
         tetronimo_bag = {1, 2, 3, 4, 5, 6, 7} -- 1=T, 2=Z, 3=L, 4=J, 5=O, 6=S, 7=I
         return
     end

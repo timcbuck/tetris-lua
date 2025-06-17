@@ -27,22 +27,6 @@ function Matrix:draw()
                             self.columns * self.block_size,
                             self.rows * self.block_size)
 
-    --[[
-    -- Draw grid outline
-    local horizontal_line_y = Globals.PLAY_AREA_TOP_LEFT_Y + self.block_size
-    local vertical_line_x = Globals.PLAY_AREA_TOP_LEFT_X + self.block_size
-    -- Draw horizontal line
-    for y = 0, self.rows-1 do
-        love.graphics.line(Globals.PLAY_AREA_TOP_LEFT_X, horizontal_line_y, Globals.PLAY_AREA_TOP_LEFT_X + self.columns * self.block_size, horizontal_line_y)
-        horizontal_line_y = horizontal_line_y + self.block_size
-    end
-    -- Draw vertical line
-    for x = 0, self.columns-1 do
-        love.graphics.line(vertical_line_x, Globals.PLAY_AREA_TOP_LEFT_Y, vertical_line_x, Globals.PLAY_AREA_TOP_LEFT_Y + self.rows * self.block_size)
-        vertical_line_x = vertical_line_x + self.block_size
-    end
-    ]]
-
     -- Draw placed tetronimos
     local x_offset, y_offset = 0, 0
     for y = 0, self.rows-1 do
@@ -71,11 +55,8 @@ function Matrix:placeTetronimo(tetronimo)
         block_x = block.x + x_offset
         block_y = block.y + y_offset
         -- Update the matrix grid with new block position
-        print("Block X = " .. block_x)
-        print("Block Y = " .. block_y)
         self.grid[block_y][block_x] = tetronimo.colour
     end
-    self:printGrid() --debug
 end
 
 function Matrix:printGrid()
@@ -110,7 +91,6 @@ function Matrix:getClearedRows(start_row, end_row)
             end
         end
         if cleared then
-            print("row " .. row ..  " is cleared!")
             table.insert(cleared_rows, row)
         end
     end
