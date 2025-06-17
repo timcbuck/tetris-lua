@@ -11,6 +11,7 @@ require("objects.TetronimoI")
 local game = {}
 local matrix = nil
 local tetronimos = {TetronimoT, TetronimoZ, TetronimoL, TetronimoJ, TetronimoO, TetronimoS, TetronimoI}
+local tetronimo_bag = {1, 2, 3, 4, 5, 6, 7} -- 1=T, 2=Z, 3=L, 4=J, 5=O, 6=S, 7=I
 local current_tetronimo = nil
 local next_tetronimo = nil
 
@@ -80,9 +81,20 @@ end
 
 function game.spawnTetronimo()
     current_tetronimo = next_tetronimo -- Move next tetronimo to current tetronimo
-    local index = love.math.random(1, #tetronimos)
-    next_tetronimo = tetronimos[index](matrix) -- Update next tetronimo with new random tetronimo
-    -- TODO: Change spawn rate for pieces
+
+    -- Choose next tetronimo from the bag
+    if #tetronimo_bag == 1 then -- If only 1 tetronimo left in the bag, reset the bag
+        next_tetronimo = tetronimos[1](matrix)
+        tetronimo_bag = {1, 2, 3, 4, 5, 6, 7} -- 1=T, 2=Z, 3=L, 4=J, 5=O, 6=S, 7=I
+        return
+    end
+
+    -- Otherwise, select random tetronimo from the bag
+    local index = love.math.random(1, #tetronimo_bag)
+    next_tetronimo = tetronimos[tetronimo_bag[index]](matrix) -- Update next tetronimo with new random tetronimo
+
+    -- Remove the chosen tetronimo from the bag
+    table.remove(tetronimo_bag, index)
 end
 
 return game

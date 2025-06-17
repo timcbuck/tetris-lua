@@ -27,6 +27,7 @@ function Matrix:draw()
                             self.columns * self.block_size,
                             self.rows * self.block_size)
 
+    --[[
     -- Draw grid outline
     local horizontal_line_y = Globals.PLAY_AREA_TOP_LEFT_Y + self.block_size
     local vertical_line_x = Globals.PLAY_AREA_TOP_LEFT_X + self.block_size
@@ -40,6 +41,7 @@ function Matrix:draw()
         love.graphics.line(vertical_line_x, Globals.PLAY_AREA_TOP_LEFT_Y, vertical_line_x, Globals.PLAY_AREA_TOP_LEFT_Y + self.rows * self.block_size)
         vertical_line_x = vertical_line_x + self.block_size
     end
+    ]]
 
     -- Draw placed tetronimos
     local x_offset, y_offset = 0, 0
