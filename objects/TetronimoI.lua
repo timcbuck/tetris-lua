@@ -4,22 +4,22 @@ TetronimoI = Tetronimo:extend()
 
 function TetronimoI:new(matrix)
     TetronimoI.super.new(self, matrix, "I")
-    self.form = { up =     {{x = 2, y = 0},
-                            {x = 2, y = 1},
-                            {x = 2, y = 2},
-                            {x = 2, y = 3}},
-                  right =  {{x = 0, y = 2},
-                            {x = 1, y = 2},
-                            {x = 2, y = 2},
-                            {x = 3, y = 2}},
-                  down =   {{x = 1, y = 0},
+    self.form = { up =     {{x = 1, y = 0},
                             {x = 1, y = 1},
                             {x = 1, y = 2},
                             {x = 1, y = 3}},
-                  left =   {{x = 0, y = 1},
+                  right =  {{x = 0, y = 1},
                             {x = 1, y = 1},
                             {x = 2, y = 1},
-                            {x = 3, y = 1}}
+                            {x = 3, y = 1}},
+                  down =   {{x = 0, y = 0},
+                            {x = 0, y = 1},
+                            {x = 0, y = 2},
+                            {x = 0, y = 3}},
+                  left =   {{x = 0, y = 2},
+                            {x = 1, y = 2},
+                            {x = 2, y = 2},
+                            {x = 3, y = 2}}
                 }
     self.colour = {110/255, 236/255, 238/255} --light blue
 end
